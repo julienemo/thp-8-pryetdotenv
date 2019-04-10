@@ -2,9 +2,6 @@ require 'twitter'
 require 'pry'
 require 'dotenv'
 
-Dotenv.load('../.env')
-
-# get 5 random handle to whom I'll need to tweet later
 
 def login_twitter
   client = Twitter::REST::Client.new do |config|
@@ -24,9 +21,9 @@ def go_tweet(target_range,n)
   elsif n > x
     return "List too short for N."
   else
+# this is THE solution to choose n random items from an array
     target = target_range.sample(n)
     client = login_twitter
-    puts client
     target.each do |tweet_target|
       client.update("#{tweet_target} Greetings! #bonjour_monde")
     end
