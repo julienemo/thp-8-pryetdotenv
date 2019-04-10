@@ -2,7 +2,7 @@ require 'twitter'
 require 'pry'
 require 'dotenv'
 
-Dotenv.load('.env')
+Dotenv.load('../.env')
 
 # get 5 random handle to whom I'll need to tweet later
 
@@ -17,14 +17,21 @@ end
 
 def go_tweet(target_range,n)
   x = target_range.length
+# data validation : no string, no float, no <=0
   if (n.to_i <= 0) || (n.to_i!= n)
     return "N must be positive integer."
+# date validation : N can't be larger than list length
   elsif n > x
     return "List too short for N."
   else
     target = target_range.sample(n)
-    return target
+    client = login_twitter
+    puts client
+    target.each do |tweet_target|
+      client.update("#{tweet_target} Greetings! #bonjour_monde")
+    end
   end
 end
 
 target_range = [ '@gem', '@ORTHOGRAMM', '@Projet_Voltaire', '@Quora', '@ARTEfr', '@operadeparis', '@theatrechatelet', '@polewebmairies', '@Mairiedu4e', '@gadelmaleh', '@lesmisofficial']
+go_tweet(target_range,3)
